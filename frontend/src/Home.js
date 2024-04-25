@@ -4,7 +4,7 @@ function Home() {
     <main>
       <h1>HOME</h1>
       <div >
-        <img height="300" width="500" src="http://localhost:5000/images/chia-fruit-drink.jpg" alt="Chia Fruit Shake" />
+        <img height="300" width="500" src="http://localhost:5001/images/Theres not an image folder so heres the absolute link: https://images.unsplash.com/photo-1490474504059-bf2db5ab2348?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chia Fruit Shake" />
         <div>
           Photo by <a href="AUTHOR_LINK">Brenda Godinez</a> on <a href="UNSPLASH_LINK">Unsplash</a>
         </div>
