@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useEffect, useState } from "react"
+import { useHistory } from "react-router"
 
-function PlaceIndex(data) {
+function PlaceIndex() {
 
 	const history = useHistory()
-	
 	const [places, setPlaces] = useState([])
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await fetch(`http://localhost:5000/places`)
+			const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/places`)
 			const resData = await response.json()
 			setPlaces(resData)
 		}
@@ -18,9 +17,9 @@ function PlaceIndex(data) {
 
 	let placesFormatted = places.map((place) => {
 		return (
-			<div className="col-sm-6" key={place.placeId}>
+			<div className="col-sm-6" key={place._id}>
 				<h2>
-					<a href="#" onClick={() => history.push(`/places/${place.placeId}`)} >
+					<a href="#" onClick={() => history.push(`/places/${place._id}`)} >
 						{place.name}
 					</a>
 				</h2>

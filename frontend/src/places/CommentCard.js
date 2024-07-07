@@ -1,4 +1,3 @@
-
 function CommentCard({ comment, onDelete }) {
     return (
         <div className="border col-sm-4">

@@ -1,11 +1,10 @@
-import { useState, useEffect, useContext } from 'react'
-import { useHistory } from "react-router";
+import { useContext, useState } from "react"
+import { useHistory } from "react-router"
 import { CurrentUser } from './contexts/CurrentUser';
 
 function Navigation() {
 
     const history = useHistory()
-
     const { currentUser } = useContext(CurrentUser)
 
     let loginActions = (

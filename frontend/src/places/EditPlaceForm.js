@@ -4,9 +4,7 @@ import { useHistory, useParams } from "react-router"
 function EditPlaceForm() {
 
 	const history = useHistory()
-
     const { placeId } = useParams()
-
     const [place, setPlace] = useState({
 		name: '',
 		pic: '',
@@ -17,25 +15,23 @@ function EditPlaceForm() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await fetch(`http://localhost:5000/places/${placeId}`)
+			const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/places/${placeId}`)
 			const resData = await response.json()
 			setPlace(resData)
 		}
 		fetchData()
-	}, [ placeId ])
+	}, [placeId])
 
 	async function handleSubmit(e) {
 		e.preventDefault()
-
-		await fetch(`http://localhost:5000/places/${place.placeId}`, {
+		await fetch(`${process.env.REACT_APP_SERVER_URL}/places/${place._id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(place)
 		})
-
-		history.push(`/places/${place.placeId}`)
+		history.push(`/places/${place._id}`)
 	}
 
 	return (
@@ -100,7 +96,10 @@ function EditPlaceForm() {
 						value={place.cuisines}
 						onChange={e => setPlace({ ...place, cuisines: e.target.value })}
 						className="form-control"
-						id="cuisines" name="cuisines" required />
+						id="cuisines" 
+                        name="cuisines" 
+                        required 
+                    />
 				</div>
 				<input className="btn btn-primary" type="submit" value="Save" />
 			</form>
@@ -108,4 +107,4 @@ function EditPlaceForm() {
 	)
 }
 
-export default EditPlaceForm
+export default EditPlaceForm;

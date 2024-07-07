@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react"
-import { useHistory } from "react-router"
 
 function NewCommentForm({ place, onSubmit }) {
-
     const [authors, setAuthors] = useState([])
-
     const [comment, setComment] = useState({
         content: '',
         stars: 3,
@@ -14,9 +11,9 @@ function NewCommentForm({ place, onSubmit }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:5000/users`)
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/users`)
             const users = await response.json()
-            setComment({ ...comment, authorId: users[0]?.userId})
+            setComment({ ...comment, authorId: users[0]?.userId })
             setAuthors(users)
         }
         fetchData()
@@ -74,10 +71,10 @@ function NewCommentForm({ place, onSubmit }) {
                     />
                 </div>
                 <div className="form-group col-sm-4">
-                    <label htmlFor="rand">Rant</label>
+                    <label htmlFor="rant">Rant</label>
                     <input
-                        checked={place.rant}
-                        onClick={e => setComment({ ...comment, rant: e.target.checked })}
+                        checked={comment.rant}
+                        onChange={e => setComment({ ...comment, rant: e.target.checked })}
                         type="checkbox"
                         id="rant"
                         name="rant"
@@ -90,4 +87,4 @@ function NewCommentForm({ place, onSubmit }) {
     )
 }
 
-export default NewCommentForm
+export default NewCommentForm;

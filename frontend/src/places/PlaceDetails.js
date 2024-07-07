@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import CommentCard from './CommentCard'
-import NewCommentForm from "./NewCommentForm";
+import NewCommentForm from "./NewCommentForm"
 
 function PlaceDetails() {
 
 	const { placeId } = useParams()
-
 	const history = useHistory()
-
 	const [place, setPlace] = useState(null)
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await fetch(`http://localhost:5000/places/${placeId}`)
+			const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/places/${placeId}`)
 			const resData = await response.json()
 			setPlace(resData)
 		}
@@ -25,30 +23,29 @@ function PlaceDetails() {
 	}
 
 	function editPlace() {
-		history.push(`/places/${place.placeId}/edit`)
+		history.push(`/places/${place._id}/edit`)
 	}
 
 	async function deletePlace() {
-		await fetch(`http://localhost:5000/places/${place.placeId}`, {
+		await fetch(`${process.env.REACT_APP_SERVER_URL}/places/${place._id}`, {
 			method: 'DELETE'
 		})
 		history.push('/places')
 	}
 
 	async function deleteComment(deletedComment) {
-		await fetch(`http://localhost:5000/places/${place.placeId}/comments/${deletedComment.commentId}`, {
+		await fetch(`${process.env.REACT_APP_SERVER_URL}/places/${place._id}/comments/${deletedComment._id}`, {
 			method: 'DELETE'
 		})
 
 		setPlace({
 			...place,
-			comments: place.comments
-				.filter(comment => comment.commentId !== deletedComment.commentId)
+			comments: place.comments.filter(comment => comment._id !== deletedComment._id)
 		})
 	}
 
 	async function createComment(commentAttributes) {
-		const response = await fetch(`http://localhost:5000/places/${place.placeId}/comments`, {
+		const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/places/${place._id}/comments`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -65,10 +62,7 @@ function PlaceDetails() {
 				comment
 			]
 		})
-
 	}
-
-
 
 	let comments = (
 		<h3 className="inactive">
@@ -96,11 +90,10 @@ function PlaceDetails() {
 		)
 		comments = place.comments.map(comment => {
 			return (
-				<CommentCard key={comment.commentId} comment={comment} onDelete={() => deleteComment(comment)} />
+				<CommentCard key={comment._id} comment={comment} onDelete={() => deleteComment(comment)} />
 			)
 		})
 	}
-
 
 	return (
 		<main>
@@ -113,14 +106,10 @@ function PlaceDetails() {
 				</div>
 				<div className="col-sm-6">
 					<h1>{place.name}</h1>
-					<h2>
-						Rating
-					</h2>
+					<h2>Rating</h2>
 					{rating}
 					<br />
-					<h2>
-						Description
-					</h2>
+					<h2>Description</h2>
 					<h3>
 						{place.name} has been serving {place.city}, {place.state} since {place.founded}.
 					</h3>
@@ -143,12 +132,9 @@ function PlaceDetails() {
 			</div>
 			<hr />
 			<h2>Got Your Own Rant or Rave?</h2>
-			<NewCommentForm
-				place={place}
-				onSubmit={createComment}
-			/>
+			<NewCommentForm place={place} onSubmit={createComment} />
 		</main>
 	)
 }
 
-export default PlaceDetails
+export default PlaceDetails;

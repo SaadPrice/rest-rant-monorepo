@@ -16,7 +16,7 @@ function NewPlaceForm() {
 	async function handleSubmit(e) {
 		e.preventDefault()
 
-		await fetch(`http://localhost:5000/places`, {
+		await fetch(`${process.env.REACT_APP_SERVER_URL}/places`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -89,7 +89,10 @@ function NewPlaceForm() {
 						value={place.cuisines}
 						onChange={e => setPlace({ ...place, cuisines: e.target.value })}
 						className="form-control"
-						id="cuisines" name="cuisines" required />
+						id="cuisines" 
+                        name="cuisines" 
+                        required 
+                    />
 				</div>
 				<input className="btn btn-primary" type="submit" value="Add Place" />
 			</form>
@@ -97,4 +100,4 @@ function NewPlaceForm() {
 	)
 }
 
-export default NewPlaceForm
+export default NewPlaceForm;
