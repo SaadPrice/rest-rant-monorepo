@@ -1,24 +1,20 @@
-// Modules and Globals
-require('dotenv').config()
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
+const port = process.env.PORT || 5000;
 
-// Express Settings
-app.use(cors())
-app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Controllers & Routes
+app.use('/places', require('./controllers/places'));
+app.use('/users', require('./controllers/users'));  // Ensure this is also correctly set up if needed
 
-app.use(express.urlencoded({ extended: true }))
-
-app.use('/places', require('./controllers/places'))
-app.use('/users', require('./controllers/users'))
-
-// Listen for Connections
-app.listen(process.env.PORT, () => {
-    console.log(`Listening on ${process.env.PORT}`)
-})
+// Listen for connections
+app.listen(port, () => {
+    console.log(`Listening on ${port}`);
+});

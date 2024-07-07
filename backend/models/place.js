@@ -1,34 +1,21 @@
-'use strict';
-const { Model } = require('sequelize');
+const mongoose = require('mongoose');
 
-module.exports = (sequelize, DataTypes) => {
-
-  class Place extends Model {
-
-
-    static associate({ Comment }) {
-      Place.hasMany(Comment, { foreignKey: 'place_id', as: 'comments' })
+const placeSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    cuisines: { type: String, required: true },
+    pic: { type: String, default: 'http://placekitten.com/400/400' },
+    founded: {
+        type: Number,
+        min: [1673, 'The earliest founded year is 1673.'],
+        max: [new Date().getFullYear(), 'The latest founded year can be the current year.']
     }
+});
 
-  };
-
-  Place.init({
-    placeId: {
-      type: DataTypes.SMALLINT,
-      primaryKey: true,
-      autoIncrement: true
-
-    },
-    name: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    cuisines: DataTypes.STRING,
-    pic: DataTypes.STRING,
-    founded: DataTypes.INTEGER
-  }, {
-    sequelize,
-    underscored: true,
-    modelName: 'Place',
-  });
-  return Place;
+placeSchema.methods.showEstablished = function() {
+    return `${this.name} has been serving ${this.city}, ${this.state} since ${this.founded}.`;
 };
+
+module.exports = mongoose.model('Place', placeSchema);
+
