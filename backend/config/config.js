@@ -1,25 +1,13 @@
-require('dotenv').config()
+require('dotenv').config();
 
 module.exports = {
   "development": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_DATABASE,
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "uri": process.env.MONGO_URI || 'mongodb://localhost:27017/rest_rant_dev'
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "uri": process.env.MONGO_URI_TEST || 'mongodb://localhost:27017/rest_rant_test'
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "uri": process.env.MONGO_URI_PROD || 'mongodb://localhost:27017/rest_rant_prod'
   }
-}
+};

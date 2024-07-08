@@ -17,5 +17,15 @@ placeSchema.methods.showEstablished = function() {
     return `${this.name} has been serving ${this.city}, ${this.state} since ${this.founded}.`;
 };
 
+placeSchema.virtual('comments', {
+    ref: 'Comment',
+    localField: '_id',
+    foreignField: 'place_id'
+});
+
+placeSchema.set('toObject', { virtuals: true });
+placeSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model('Place', placeSchema);
+
 

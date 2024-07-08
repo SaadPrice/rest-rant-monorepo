@@ -71,13 +71,15 @@
     "unpipe": "^1.0.0",
     "utils-merge": "^1.0.1",
     "vary": "^1.1.2",
-    "mongoose": "^8.4.5"
+    "mongoose": "^8.4.5",
+    "method-override": "^3.0.0"  
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "seed": "node seeders/seed.js" 
   },
   "keywords": [],
   "author": "",

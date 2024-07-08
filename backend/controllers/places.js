@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Place = require('../models/place');
+const Comment = require('../models/comment');
 
 // Create a new place
 router.post('/', async (req, res) => {
@@ -49,7 +50,7 @@ router.get('/', async (req, res) => {
 router.get('/:placeId', async (req, res) => {
     console.log(`GET /places/${req.params.placeId} route hit`);
     try {
-        const place = await Place.findById(req.params.placeId);
+        const place = await Place.findById(req.params.placeId).populate('comments');
         if (!place) {
             res.status(404).json({ message: 'Place not found' });
         } else {
@@ -102,3 +103,4 @@ router.delete('/:placeId', async (req, res) => {
 });
 
 module.exports = router;
+
